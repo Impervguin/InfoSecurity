@@ -23,6 +23,10 @@ func readRotor(name string) (*enigma.EnigmaRotor, error) {
 	return enigma.ReadEnigmaRotor(configFileName(name))
 }
 
+func readCommutator(name string) (*enigma.Commutator, error) {
+	return enigma.ReadCommutator(configFileName(name))
+}
+
 type Args struct {
 	inputFile  string
 	outputFile string
@@ -65,12 +69,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	commutator1, err := readCommutator("commutator1")
+	if err != nil {
+		panic(err)
+	}
 
+	commutator1.After(rotor1)
 	rotor1.After(rotor2)
 	rotor2.After(rotor3)
 	rotor3.After(reflector)
 
-	machine := enigma.NewEnigmaMachine(rotor1)
+	machine := enigma.NewEnigmaMachine(commutator1)
 
 	inFile, err := os.Open(args.inputFile)
 	if err != nil {

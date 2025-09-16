@@ -26,9 +26,18 @@ func createReflector(name string) {
 		fmt.Println(err)
 	}
 }
+
+func createCommutator(name string) {
+	commutator := enigma.RandomCommutator()
+	err := enigma.DumpCommutator(commutator, configFileName(name))
+	if err != nil {
+		fmt.Println(err)
+	}
+}
 func main() {
 	createRotor("rotor1")
 	createRotor("rotor2")
 	createRotor("rotor3")
 	createReflector("reflector1")
+	createCommutator("commutator1")
 }
