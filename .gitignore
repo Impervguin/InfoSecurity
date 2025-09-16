@@ -36,3 +36,4 @@ go.work.sum
 *.aux
 *.synctex.gz
 *.toc
+*.tex
