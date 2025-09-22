@@ -32,9 +32,9 @@ func (r *RSAPublicKey) Encrypt(message []byte) ([]byte, error) {
 		block := message[i:end]
 
 		num := big.NewInt(0).SetBytes(block)
-		// if num.Cmp(r.Module) != -1 {
-		// 	return nil, fmt.Errorf("block is bigger than modulus")
-		// }
+		if num.Cmp(r.Module) != -1 {
+			return nil, fmt.Errorf("block is bigger than modulus")
+		}
 		encrypted := big.NewInt(0).Exp(num, r.PublicExponent, r.Module)
 		encryptedBytes := encrypted.Bytes()
 		if len(encryptedBytes) > blockSize {
